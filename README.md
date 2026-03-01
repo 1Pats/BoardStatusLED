@@ -3,37 +3,66 @@ ESP32 LED Status Indicator
 A lightweight, non-blocking status LED library for dual-core ESP32 boards.
 Provides a unified API for built-in or external LEDs without requiring changes to application code when switching LED types.
 
+
 ✨ Features
+
 ✅ Supports built-in and external LEDs
+
 ✅ Mono, RGB, and WS2812 support
+
 ✅ Fully non-blocking (Core 0 task)
+
 ✅ Compile-time LED type selection
+
 ✅ Dummy driver if no LED is present
+
 ✅ Lightweight (no mandatory dependencies)
+
 ✅ Optional Adafruit NeoPixel support
 
+
+
 📦 Requirements
+
 Dual-core ESP32 (not supported on ESP32-C3)
+
 Arduino IDE (ESP32 core installed)
 
+
 🔧 Supported LED Types
+
 Built-in mono LED
+
 Built-in WS2812
+
 External mono LED
+
 External RGB LED (common cathode or anode)
+
 LED type is selected via #define at compile time.
+
 No application code changes are required when switching LED hardware.
 
 🚦 Supported Status Modes
+
 Status	      Description
-OFF	       LED off
-OK	       Solid green
-INFO	       Green breathing effect
-CONNECTING     Blue heartbeat effect
-WARNING	       Slow yellow blinking
+
+OFF	         LED off
+
+OK	          Solid green
+
+INFO	        Green breathing effect
+
+CONNECTING   Blue heartbeat effect
+
+WARNING	     Slow yellow blinking
+
 ERROR	       Fast red blinking
-RAINBOW	       RGB rainbow cycle (mono LED: solid ON)
-USER	       Custom color and blink rate
+
+RAINBOW	     RGB rainbow cycle (mono LED: solid ON)
+
+USER	        Custom color and blink rate
+
 
 🚀 Basic Usage
 to enable the appropriate type of LED use #define before line: #include BordStatusLed.h
