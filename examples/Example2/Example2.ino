@@ -1,0 +1,43 @@
+
+/*
+ * 1Pats Febryary 2026  
+ * Example2: Memory test. Illustration of BoardStatusLED library usage 
+ * Allocate memory block by block till it is available. Print the amount of allocated memory
+ * if memory is over, set error status  and stop working
+ * Code developed according to KISS principle
+*/
+
+// Uncomment line to match your board
+ #define USE_WS2812_LED                                                       // built in WS2812 LED (typically ESP32 S3 DEV boards)  compact option
+// #define USE_WS2812_LED_ADAFRUIT                                             // built in WS2812 LED (typically ESP32 S3 DEV boards) Adafruit variant (requires AdaFruit_Neopicel libray)
+// #define USE_MONO_LED                                                        // built in LED (some of ESP32 DEV boards)
+// #define USE_EXTERNAL_RGB_LED                                                // external (not on board) RGB led
+// #define USE_EXTERNAL_MONO_LED                                               // external (not on board)) mono led
+
+#include "BoardStatusLED.h"
+
+#define DP(...)  Serial.printf(__VA_ARGS__)                                    // debug print:  DP have to be replaced with Serial.printf
+//#define DP(...)                                                              //               DP have to be repalced with empty line          
+
+void setup() {
+    Serial.begin(115200);
+    LED(CONNECTING);
+    delay(2000);                                                               // wait 2 seconds
+    LED(INFO);                                                                 // start green "breathing"
+}
+// Allocate memory block by block. Print amount of allocated memory
+// if memory is over, set error status on LED and stop working
+#define MEM_SIZE_BLOCK 1024                                                    // blocak size
+void loop() {
+  static uint32_t ulMemTotal = 0;                                              // count of avaoable mempy - butes
+  void *pVoid = malloc(MEM_SIZE_BLOCK);                                        // allocate next block
+  if (pVoid != NULL) {                                                         // if success 
+    ulMemTotal += MEM_SIZE_BLOCK;                                              // count it
+    DP("Memory allocated:%d bytes total\n", ulMemTotal); 
+  }
+  else {
+    DP("Memory over\n");
+    LED(ERROR);                                                                // LED blinks red 
+    while(true);                                                               // stop here 
+  }   
+}
