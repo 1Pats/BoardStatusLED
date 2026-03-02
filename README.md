@@ -56,6 +56,8 @@ No application code changes are required when switching LED hardware.
 // #define USE_MONO_LED                                // built-in mono LED (some ESP32 DEV boards)
 // #define USE_EXTERNAL_RGB_LED                        // external (not on board) RGB LED
 // #define USE_EXTERNAL_MONO_LED                       // external (not on board) mono LED
+
+Define PINs if an external LED is used
 ```
 
 2. Put macros in your code:
