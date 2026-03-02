@@ -213,17 +213,27 @@ void _vUpdateLED(void *voidPointer){                                           /
 
 // Instantiate LED depending on configuration
 #if defined(USE_MONO_LED)                                                      // on-board mono LED
+#ifndef MONO_LED_PIN
   #define MONO_LED_PIN         2                                               // typically internal pin 2 used
+#endif
   cMonoLed oBoardLed(MONO_LED_PIN);                                            // mono led driver
   cLedDriver* pLedPtr = &oBoardLed;                                            // pointer to driver
 #elif defined(USE_EXTERNAL_MONO_LED)                                           // external mono led
+#ifndef EXT_MONO_LED_PIN
   #define EXT_MONO_LED_PIN    26                                               // testing on this pin
+#endif
   cMonoLed oBoardLed(EXT_MONO_LED_PIN);                                        // external mono led
   cLedDriver* pLedPtr = &oBoardLed;                                            // pointer to driver 
 #elif defined(USE_EXTERNAL_RGB_LED)                                            // External RGB led
+#ifndef RGB_BLUE_PIN
   #define RGB_BLUE_PIN        25                                               // testing on these pins
+#endif
+#ifndef RGB_GREEN_PIN
   #define RGB_GREEN_PIN       33                                               // testing on these pins
-  #define RGB_RED_PIN         32                                               // testing on these pins 
+#endif
+#ifndef RGB_RED_PIN
+  #define RGB_RED_PIN         32                                               // testing on these pins
+#endif 
   cRGBLed oBoardLed(RGB_RED_PIN,RGB_GREEN_PIN,RGB_BLUE_PIN, false);            // external rgb led false - common 
   cLedDriver* pLedPtr = &oBoardLed;                                            // pointer tp led driver 
 #elif defined(USE_WS2812_LED) || defined(USE_WS2812_LED_ADAFRUIT)              // two variants supported for WS2812
@@ -240,4 +250,5 @@ void _vUpdateLED(void *voidPointer){                                           /
 #else                                         
     cLedServiceNull oLedServiceNull;                                           // no LED service fallback
     cLedServiceBase* pLedService = &oLedServiceNull;
+
 #endif
