@@ -1,6 +1,6 @@
 
 /* 
- * Illustration of BoarDtatusLed library usage
+ * Illustration of BoardStatusLed library usage
  * Sequentially changes the LED status
  * 1Pats February 2026
  * Code developed according to KISS principle
@@ -49,3 +49,4 @@ void loop() {
     }  
 
 }
+
