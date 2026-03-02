@@ -14,6 +14,13 @@
 // #define USE_EXTERNAL_RGB_LED                                                // external (not on board) RGB led
 // #define USE_EXTERNAL_MONO_LED                                               // external (not on board)) mono led
 
+// Use these defines and your PINs if USE_EXTERNAL_RGB_LED
+// #define RGB_BLUE_PIN        25                                              // testing on these pins
+// #define RGB_GREEN_PIN       33                                              // testing on these pins
+// #define RGB_RED_PIN         32                                              // testing on these pins
+// use this define and your PIN, if USE_EXTERNAL_MONO_LED
+// #define EXT_MONO_LED_PIN    26   
+
 #include "BoardStatusLED.h"
 
 #define DP(...)  Serial.printf(__VA_ARGS__)                                    // debug print:  DP have to be replaced with Serial.printf
