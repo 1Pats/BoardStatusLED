@@ -175,7 +175,7 @@ BoardStatusLED/
 | ESP32 WROOM/WROVER | No RGB |
 | ESP32 DevKitC | Usually mono (GPIO2) |
 | ESP32-S3 DevKitC-1 | Often WS2812 (GPIO48) |
-| ESP32-C3 | Not supported (single core) |
+| ESP32-CX | Not supported (single core) |
 
 
 ## 🎯 Design Principles
