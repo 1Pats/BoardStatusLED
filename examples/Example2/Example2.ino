@@ -24,6 +24,7 @@ void setup() {
 #define MEM_SIZE_BLOCK 1024                                                    // blocak size
 void loop() {
   static uint32_t ulMemTotal = 0;                                              // count of avaoable mempy - butes
+  delay(1000);
   void *pVoid = malloc(MEM_SIZE_BLOCK);                                        // allocate next block
   if (pVoid != NULL) {                                                         // if success 
     ulMemTotal += MEM_SIZE_BLOCK;                                              // count it
