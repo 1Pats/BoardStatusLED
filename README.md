@@ -161,6 +161,8 @@ BoardStatusLED/
 │   └── BoardStatusLed.cpp
 │
 ├── examples/
+│   ├── Example0/
+│   │   └── Example0.ino
 │   ├── Example1/
 │   │   └── Example1.ino
 │   ├── Example2/
