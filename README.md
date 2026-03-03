@@ -48,7 +48,10 @@ No application code changes are required when switching LED hardware.
 
 ## 🚀 Basic Usage
 
-1. To enable the appropriate type of LED, use `#define` before the line: `#include "BoardStatusLed.h"`
+1. To enable the appropriate type of LED, open file BordStausLEDSetup.h and enable #define which maps with your board.
+Open BoardStatusLEDSetup.h in an external editor (notepad) as it might be read-only.
+By enabling/disabling #defines, you optimize library code- code for LED drivers that are not used by your board will be generated
+By default (you do nothing), the library is enabled to ESP32 S3
 
 ```cpp
 // #define USE_WS2812_LED                              // built-in WS2812 LED (typically ESP32 S3 DEV boards) - compact option
