@@ -157,6 +157,7 @@ Exact values depend on the optimization level and ESP32 core version.
 BoardStatusLED/
 │
 ├── src/
+│   ├── BoardStatusLedSetup.h
 │   ├── BoardStatusLed.h
 │   └── BoardStatusLed.cpp
 │
