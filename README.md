@@ -1,3 +1,4 @@
+## ESP32 LED Status Indicator
 
 A lightweight, non-blocking status LED library for dual-core ESP32 boards.
 Provides a unified API for built-in or external LEDs without requiring changes to application code when switching LED types.
