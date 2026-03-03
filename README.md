@@ -80,6 +80,7 @@ LEDUSER(R,G,B,I)
 Where `R`, `G`, `B` are RGB color components, and `I` is the blinking interval in milliseconds.
 
 **See examples:**
+- Example0 - absolute minimum
 - Example1 - Illustration of all states
 - Example2 - Memory allocation test
 - Example3 - Board and WiFi diagnostics
