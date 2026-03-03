@@ -82,8 +82,8 @@ Where `R`, `G`, `B` are RGB color components, and `I` is the blinking interval i
 **See examples:**
 - Example0 - absolute minimum
 - Example1 - Illustration of all states
-- Example2 - Memory allocation test
-- Example3 - Board and WiFi diagnostics
+- Example2 - memory allocation test
+- Example3 - board and WiFi diagnostics
 
 
 ## 🧠 Non-Blocking Operation
