@@ -49,7 +49,7 @@ No application code changes are required when switching LED hardware.
 ## 🚀 Basic Usage
 
 1. To enable the appropriate type of LED, open file BordStatusLEDSetup.h and enable #define which maps with your board.
-Open BoardStatusLEDSetup.h in an external editor (notepad) as it might be read-only.
+Open BoardStatusLEDSetup.h in an external editor (notepad) as it might be read-only iny our editor.
 By enabling/disabling #defines, you optimize library code.
 By default, the library is enabled for ESP32 S3 (RMT). If you operate with ES32 S3, you might skip step 1.
 
