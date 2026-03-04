@@ -85,6 +85,10 @@ Where `R`, `G`, `B` are RGB color components, and `I` is the blinking interval i
 - Example2 - memory allocation test
 - Example3 - board and WiFi diagnostics
 
+## 📸 Demo
+
+Add real screenshots or GIFs here later
+
 
 ## 🧠 Non-Blocking Operation
 
