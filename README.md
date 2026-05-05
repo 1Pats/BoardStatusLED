@@ -7,7 +7,7 @@ Provides a unified API for built-in or external LEDs without requiring changes t
 
 
 
-✨ # Features
+# ✨ Features
 
 ✅ Supports built-in and external LEDs
 
