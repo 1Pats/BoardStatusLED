@@ -159,8 +159,7 @@ LedDriver abstracts hardware
 Hardware can be swapped without modifying application code
 
 
-
-#🔌 External Wiring (if no on-board LED)
+#🔌External Wiring (if no on-board LED)
 
 **Mono LED:**
 ```
