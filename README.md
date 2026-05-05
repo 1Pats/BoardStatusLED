@@ -48,8 +48,7 @@ LED type is selected via `#define` at compile time.
 No application code changes are required when switching LED hardware.
 
 
-
-#🚦 Supported Status Modes
+# 🚦 Supported Status Modes
 | Status     | Description                                                |
 |------------|------------------------------------------------------------|
 | OFF        | LED off                                                    |
