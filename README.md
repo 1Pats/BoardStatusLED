@@ -1,4 +1,4 @@
-ESP32 LED Status Indicator V2.0
+# ESP32 LED Status Indicator V2.0
 
 
 A lightweight, non-blocking status LED library for dual-core ESP32 boards.
