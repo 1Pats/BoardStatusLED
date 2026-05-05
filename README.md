@@ -33,7 +33,7 @@ Arduino IDE (ESP32 core installed)
 
 
 
-🔧 # Supported LED Types
+# 🔧 Supported LED Types
 
 Built-in mono LED
 
