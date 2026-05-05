@@ -27,7 +27,7 @@ Provides a unified API for built-in or external LEDs without requiring changes t
 
 # 📦 Requirements
 
-Dual-core ESP32 (not supported on ESP32-C3)
+Dual-core ESP32 (not supported on ESP32-CX)
 
 Arduino IDE (ESP32 core installed)
 
