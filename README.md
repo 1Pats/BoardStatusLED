@@ -25,7 +25,7 @@ Provides a unified API for built-in or external LEDs without requiring changes t
 
 
 
-📦 # Requirements
+# 📦 Requirements
 
 Dual-core ESP32 (not supported on ESP32-C3)
 
@@ -49,7 +49,7 @@ No application code changes are required when switching LED hardware.
 
 
 
-🚦 # Supported Status Modes
+#🚦 Supported Status Modes
 | Status     | Description                                                |
 |------------|------------------------------------------------------------|
 | OFF        | LED off                                                    |
@@ -74,7 +74,7 @@ No application code changes are required when switching LED hardware.
 
 
 
-🚀 # Basic Usage
+# 🚀  Basic Usage
 
 1. Enable the appropriate LED type by uncommenting a `#define` in `BoardStatusLEDSetup.h`.
 Edit this file in a text editor such as Notepad.
@@ -128,7 +128,7 @@ See examples:
 
 
 
-🧠 # Non-Blocking Operation
+# 🧠  Non-Blocking Operation
 
 LED handling runs on a dedicated Core 0 task.
 
@@ -140,7 +140,7 @@ If `LED(INFO)` is set at startup, the LED continues breathing until a new status
 
 
 
-🏗 # Architecture
+# 🏗  Architecture
 ```
 Application
 |
@@ -160,7 +160,7 @@ Hardware can be swapped without modifying application code
 
 
 
-🔌 # External Wiring (if no on-board LED)
+#🔌 External Wiring (if no on-board LED)
 
 **Mono LED:**
 ```
@@ -184,7 +184,7 @@ The longest pin is usually the common pin
 
 
 
-🌈 # WS2812 Support
+# 🌈 WS2812 Support
 
 The default implementation uses a lightweight RMT-based driver.
 
@@ -194,7 +194,7 @@ Adafruit NeoPixel library
 
 
 
-📊 # Memory Footprint (Approximate)
+# 📊 Memory Footprint (Approximate)
 | Configuration     | Flash Usage | Notes               |
 |-------------------|-------------|---------------------|
 | No LED (dummy)    | Minimal     | Service layer only  |
@@ -207,7 +207,7 @@ Exact values depend on the optimization level and ESP32 core version.
 
 
 
-🧩 Example Project Structure
+#🧩 Examples Project Structure
 ```
 BoardStatusLED/
 │
@@ -233,7 +233,7 @@ BoardStatusLED/
 
 
 
-🏷 # Supported Popular Boards
+# 🏷 Supported Popular Boards
 | Board                   | Built-in LED                |
 |-------------------------|-----------------------------|
 | ESP32 WROOM/WROVER      | No RGB                      |
@@ -241,7 +241,7 @@ BoardStatusLED/
 | ESP32-S3 and successors | Often WS2812 (GPIO 48)      |
 | ESP32-CX                | Not supported (single-core) |
 
-🎯 # Design Principles
+# 🎯 Design Principles
 
 KISS (Keep It Simple and Small)
 
@@ -255,6 +255,6 @@ No runtime LED detection
 
 
 
-📄 License
+# 📄 License
 
 MIT License
