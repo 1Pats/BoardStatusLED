@@ -1,16 +1,25 @@
 
 #pragma once
-#include <Arduino.h>
 #include "BoardStatusLedSetup.h"
- 
+
+#if (defined(USE_WS2812_LED) + defined(USE_WS2812_LED_ADAFRUIT) + defined(USE_MONO_LED) + defined(USE_EXTERNAL_RGB_LED) + defined(USE_EXTERNAL_MONO_LED)) > 1
+  #error "Only ONE LED backend can be enabled at a time!"
+#endif
+
+#if (defined(USE_WS2812_LED) + defined(USE_WS2812_LED_ADAFRUIT) + defined(USE_MONO_LED) + defined(USE_EXTERNAL_RGB_LED) + defined(USE_EXTERNAL_MONO_LED)) == 0
+  #error "No LED backend selected! (see .../libraries/BoardStatusLED/src/BoardStatusLEDSetup.h)"
+#endif
+
+#include <Arduino.h>
 
 #define BREATH_SPEED          (uint32_t)(0.002 * float(1 << 14))              // breath speed, but use unsigned long to save it
 #define RAINBOW_STEP          (uint32_t)(PI/180* float(1 << 14))              // RAINBOW  change - one degree per call
+#define HEARTBEAT_INTERVAL    1000                                            // set interval between heartbeats 
 #define BLINK_INTERVAL_FAST   250                                             // milliseconds, blink rate for ERROR
 #define BLINK_INTERVAL_SLOW   1000                                            // ms WARNING blink rate
 #define BLINK_INTERVAL_CUSTOM 100                                             // ms, default blink rate for USER
 
-enum  eStatuses {SOLID, BLINK_FAST, BLINK_SLOW, BREATH, RAINBOW, HEARTBEAT, CUSTOM, OFF};   // enumerated LED patterns
+enum  eStatuses {SOLID, BLINK_FAST, BLINK_SLOW, BREATH, RAINBOW, ARMED, HEARTBEAT, CUSTOM, OFF, RED, GREEN, BLUE, YELLOW, PINK, SKY, RETRIEVING, WAITING, WHITE};   // enumerated LED patterns
 
 struct sLedStatusConfig {                                                     // defines LED color and behavior configuration
     uint8_t   bR, bG, bB;                                                     // red, green, blue 
@@ -20,14 +29,25 @@ struct sLedStatusConfig {                                                     //
 
 
 namespace LEDStatus {                                                         // namespace is used to isolate commonly used keywords
-    extern const sLedStatusConfig ERROR;
+    extern const sLedStatusConfig ERROR;                                      // to use in LED() macro...
     extern const sLedStatusConfig WARNING;
     extern const sLedStatusConfig INFO;
+    extern const sLedStatusConfig WORKING;
     extern const sLedStatusConfig OK;
     extern const sLedStatusConfig CONNECTING;
     extern const sLedStatusConfig RAINBOW;
+    extern const sLedStatusConfig ARMED;
+    extern const sLedStatusConfig RETRIEVING;
+    extern const sLedStatusConfig WAITING;
     extern const sLedStatusConfig OFF;
-    extern       sLedStatusConfig USER;                                       // no const because user can modify
+    extern const sLedStatusConfig RED;
+    extern const sLedStatusConfig GREEN;
+    extern const sLedStatusConfig BLUE;
+    extern const sLedStatusConfig YELLOW;
+    extern const sLedStatusConfig PINK;
+    extern const sLedStatusConfig SKY;
+    extern const sLedStatusConfig WHITE;
+    extern       sLedStatusConfig USER;                                        // no const because user can modify
 }
 
 class cLedDriver  {                                                            // base LED driver providing basic interface functions

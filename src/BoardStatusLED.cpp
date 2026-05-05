@@ -1,22 +1,33 @@
 #include "BoardStatusLED.h"
 
 #define DP(...)  Serial.printf(__VA_ARGS__)                                    // Debug print macro
-//#define DP(...)                                                              // Replace DP with empty definition to disable debug output   
+//  #define DP(...)                                                              // Replace DP with empty definition to disable debug output   
 
 namespace LEDStatus {                                                                               // namespace here is used to isolate popular keywords
 // define patterns                  R    G   B     Parameter              Pattern
-const sLedStatusConfig ERROR     = {255,  0,  0, BLINK_INTERVAL_FAST,    eStatuses::BLINK_FAST};    // red, blinking fast
-const sLedStatusConfig WARNING   = {127, 127, 0, BLINK_INTERVAL_SLOW,    eStatuses::BLINK_SLOW};    // yellow, blinking slow
-const sLedStatusConfig INFO      = {  0,255,  0, BREATH_SPEED,           eStatuses::BREATH};        // green, breathing
-const sLedStatusConfig OK        = {  0,255,  0, 0,                      eStatuses::SOLID};         // green, solid
-const sLedStatusConfig CONNECTING= {  0,  0,255, 0,                      eStatuses::HEARTBEAT};     // blue, heartbeat
-const sLedStatusConfig RAINBOW   = {  0,  0,  0, RAINBOW_STEP,           eStatuses::RAINBOW};       // rainbow, color wheel
-const sLedStatusConfig OFF       = {  0,  0,  0, 0,                      eStatuses::OFF};           // just to switch led off
-      sLedStatusConfig USER      = {  15,15, 15, BLINK_INTERVAL_CUSTOM,  eStatuses::CUSTOM};        // default: gray, blinking very fast 
+const sLedStatusConfig ERROR     = {255,  0,  0, BLINK_INTERVAL_FAST,      eStatuses::BLINK_FAST};    // red, blinking fast
+const sLedStatusConfig WARNING   = {127, 127, 0, BLINK_INTERVAL_SLOW,      eStatuses::BLINK_SLOW};    // yellow, blinking slow
+const sLedStatusConfig INFO      = {  0,255,  0, BREATH_SPEED,             eStatuses::BREATH};        // green, breathing
+const sLedStatusConfig WORKING   = {  0,127,  0, BREATH_SPEED/2,           eStatuses::BREATH};        // green, slow breathing
+const sLedStatusConfig OK        = {  0,196,  0, 0,                        eStatuses::SOLID};         // light green, solid
+const sLedStatusConfig CONNECTING= {  0,  0,255, 0,                        eStatuses::HEARTBEAT};     // blue, heartbeat
+const sLedStatusConfig RAINBOW   = {  0,  0,  0, RAINBOW_STEP,             eStatuses::RAINBOW};       // rainbow, color wheel
+const sLedStatusConfig ARMED     = {196,  0,  0, BREATH_SPEED/4,           eStatuses::BREATH};        // light red color, very slow breath
+const sLedStatusConfig RETRIEVING= {  0,127,127, HEARTBEAT_INTERVAL,       eStatuses::HEARTBEAT};     // sky blue, assymetric blink
+const sLedStatusConfig WAITING  =  {127,127,  46, BREATH_SPEED/5,          eStatuses::BREATH};        // yellow, very slow breath
+const sLedStatusConfig OFF       = {  0,  0,  0, 0,                        eStatuses::OFF};           // black (no color)
+const sLedStatusConfig RED       = {255,  0,  0, 0,                        eStatuses::SOLID};         // just red color
+const sLedStatusConfig GREEN     = {  0,255,  0, 0,                        eStatuses::SOLID};         // just green color
+const sLedStatusConfig BLUE      = {  0,  0,255, 0,                        eStatuses::SOLID};         // just blue color
+const sLedStatusConfig YELLOW    = {255,255,  0, 0,                        eStatuses::SOLID};         // just yellow color
+const sLedStatusConfig PINK      = {255,  0, 255,0,                        eStatuses::SOLID};         // just pink color
+const sLedStatusConfig SKY       = {  0,255, 255,0,                        eStatuses::SOLID};         // just sky blue color
+const sLedStatusConfig WHITE     = {255,255,255, 0,                        eStatuses::SOLID};         // just white color
+      sLedStatusConfig USER      = { 15,15, 5, BLINK_INTERVAL_CUSTOM,      eStatuses::CUSTOM};         // default: gray, blinking very fast 
 }
 
 // base LED driver with basic functions
-#if defined(USE_MONO_LED) || defined(USE_EXTERNAL_MONO_LED)                                                            // some ES32 Dev Boards
+#if defined(USE_MONO_LED) || defined(USE_EXTERNAL_MONO_LED)                    // some ESP32 Dev Boards
 cMonoLed::cMonoLed(int gpio): iPin(gpio) {}                                    // constructor
 void cMonoLed::vBegin() {                                                      // initial commands 
      pinMode(iPin, OUTPUT);                                                    // set pin to output
@@ -81,9 +92,9 @@ void cRGBLed::vBegin() {
         timer_conf.freq_hz          = PWM_FREQ;
         timer_conf.clk_cfg          = LEDC_AUTO_CLK;
         ledc_timer_config(&timer_conf);
-        ledc_channel_config_t r_conf = {};                 // configure R channel
+        ledc_channel_config_t r_conf = {};                 
         r_conf.gpio_num   = iRPin;
-        r_conf.speed_mode = PWM_MODE;
+        r_conf.speed_mode = PWM_MODE;                     // configure R channel
         r_conf.channel    = R_CHANNEL;
         r_conf.intr_type  = LEDC_INTR_DISABLE;
         r_conf.timer_sel  = PWM_TIMER;
@@ -141,7 +152,6 @@ void cLedService::vSetUser(uint8_t bR, uint8_t bG, uint8_t bB, uint32_t ulInterv
 }
 
 void cLedService::vSetStatus(const sLedStatusConfig& oStatus){
-      //DP("\nvSetStaus()\n");
      if (_lLastUpdate == 0) vBegin();                                          // check if initialized 
      _ActiveStatus = oStatus;                                                  // set new status
      _lLastUpdate = millis();                                                  // reset timestamp
@@ -159,6 +169,7 @@ void cLedService::vUpdate() {
             case BLINK_FAST: vBlink(ulNow);          break;
             case HEARTBEAT:  vHeartBeat(ulNow);      break;
             case RAINBOW:    vRainbow();             break;
+            
       }
        xSemaphoreGive(_batton);                                                // start to update
 }
@@ -176,9 +187,10 @@ void cLedService::vBlink(unsigned long ulNow) {                                /
 } 
 
 void cLedService::vHeartBeat(unsigned long ulNow) {                            // simulate heartbeat pattern
-     const int iTimings[]={120,180,120,900};                                   // define heartbeat timing sequence
+     const int iTimings[]={100, 150, 100, 650};                                // define heartbeat timing sequence
      static uint8_t iStep = 0;                                                 // track current step
-     if (ulNow - _lLastUpdate >= iTimings[iStep]){                             // check timing  
+     unsigned long ulInterval = iTimings[iStep]+ ((iStep == 2)? _ActiveStatus.ulParameter: 0); 
+     if (ulNow - _lLastUpdate >= ulInterval){                                  // check timing  
         _lLastUpdate = ulNow;                                                  // rememeber timestamp
         if ((iStep == 0) || (iStep == 2)) _Led->vSetColor(_ActiveStatus.bR,_ActiveStatus.bG,_ActiveStatus.bB);   // turn LED on for pulse
         else _Led->vOff();                                                     // turm LED off between pulses
@@ -191,11 +203,15 @@ void cLedService::vBreathe(unsigned long ulNow) {                              /
      _lLastUpdate = ulNow;                                                     // reset timestamp
      float fSpeed =  float(_ActiveStatus.ulParameter)/float(1 << 14);          // convert stored speed value                
      static float fBreathPhase = 0;                                            // track breathing phase
-     fBreathPhase += ulDelta*fSpeed;                                           // value depends on time. not on count
+     fBreathPhase += ulDelta*fSpeed;                                           // value depends on time, not on count
      while (fBreathPhase > TWO_PI) fBreathPhase -= TWO_PI;                     // keep phase within range
      float fIntensity = (1.0f - cos(fBreathPhase))*0.5;                        // simulate smooth breathing curve
-     fIntensity = pow(fIntensity, 2.2);                                        // apply gamma correctionargument
-     _Led->vSetColor(_ActiveStatus.bR*fIntensity, _ActiveStatus.bG*fIntensity, _ActiveStatus.bB*fIntensity);   // display intensity
+     fIntensity = pow(fIntensity, 2.2);                                        // apply gamma correctionargument  
+     uint8_t bR = byte(_ActiveStatus.bR*fIntensity);                           // reduce to byte
+     uint8_t bG = byte(_ActiveStatus.bG*fIntensity); 
+     uint8_t bB = byte(_ActiveStatus.bB*fIntensity);                                    
+     if ((bR == 0) && (bG == 0) && (bB == 0)) return;                          // avoid black - keep previous color
+     _Led->vSetColor(bR,bG,bB);                                                // display intensity
 }
 
 void cLedService::vRainbow(){                                                  // pseido rainbow effect
@@ -207,13 +223,14 @@ void cLedService::vRainbow(){                                                  /
       _Led->vSetColor(bR, bG, bB);                                             // display color
 }
 
+
 void _vUpdateLED(void *voidPointer){                                           // core 0 task, (not a class function) 
    while(true){                                                                // infinite loop
        xSemaphoreTake(_batton,portMAX_DELAY);                                  // wait until core 1 finishes update
        xSemaphoreGive(_batton);                                                // allow core 1 to continue 
        cLedService *pLedService = (cLedService *)voidPointer;                  // cast parameter to correct type
        pLedService->vUpdate();                                                 // keep LED updated
-       vTaskDelay(pdMS_TO_TICKS(25));                                          // Yield to scheduler (minimum 25 ms)
+       vTaskDelay(pdMS_TO_TICKS(25));                                          // yield to scheduler (minimum 25 ms)
     }                                                        
 }
 
@@ -233,14 +250,14 @@ void _vUpdateLED(void *voidPointer){                                           /
   cLedDriver* pLedPtr = &oBoardLed;                                            // pointer to driver 
   
 #elif defined(USE_EXTERNAL_RGB_LED)                                            // External RGB led
-  #if defined(RGB_RED_PIN) && defined(RGB_GREEN_PIN) && defined(RGB_BLUE_PIN)
+  #if (defined(RGB_RED_PIN) + defined(RGB_GREEN_PIN) + defined(RGB_BLUE_PIN)) != 3
      cRGBLed oBoardLed(RGB_RED_PIN,RGB_GREEN_PIN,RGB_BLUE_PIN, false);         // external rgb led false - common 
      cLedDriver* pLedPtr = &oBoardLed;                                         // pointer tp led driver
   #else 
      #error "RGB_RED_PIN,RGB_GREEN_PIN,RGB_BLUE_PIN - not defined"
   #endif
 
-#elif defined(USE_WS2812_LED) || defined(USE_WS2812_LED_ADAFRUIT)              // two variants supported for WS2812
+#elif (defined(USE_WS2812_LED) + defined(USE_WS2812_LED_ADAFRUIT)) == 1        // two variants supported for WS2812
   #ifndef WS2812_LED_PIN
      #define WS2812_LED_PIN 48
   #endif
@@ -253,7 +270,7 @@ void _vUpdateLED(void *voidPointer){                                           /
 
 #endif
 
-#if defined(USE_WS2812_LED) || defined(USE_WS2812_LED_ADAFRUIT) || defined(USE_MONO_LED) || defined(USE_EXTERNAL_RGB_LED) || defined(USE_EXTERNAL_MONO_LED)
+#if (defined(USE_WS2812_LED) + defined(USE_WS2812_LED_ADAFRUIT) + defined(USE_MONO_LED) + defined(USE_EXTERNAL_RGB_LED) + defined(USE_EXTERNAL_MONO_LED)) != 0
     cLedService oLedService(pLedPtr);                                          // real LED service
     cLedServiceBase* pLedService = &oLedService;   
 #else                                         
