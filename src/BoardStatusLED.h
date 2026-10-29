@@ -1,6 +1,6 @@
 
 #pragma once
-#include "BoardStatusLedSetup.h"
+#include "BoardStatusLEDSetup.h"
 
 #if (defined(USE_WS2812_LED) + defined(USE_WS2812_LED_ADAFRUIT) + defined(USE_MONO_LED) + defined(USE_EXTERNAL_RGB_LED) + defined(USE_EXTERNAL_MONO_LED)) > 1
   #error "Only ONE LED backend can be enabled at a time!"
@@ -53,7 +53,7 @@ namespace LEDStatus {                                                         //
 class cLedDriver  {                                                            // base LED driver providing basic interface functions
  public:
     cLedDriver() {};                                                           // constructor
-    ~cLedDriver() {};                                                          // destructor
+    virtual ~cLedDriver() {};                                                  // destructor
     virtual void vBegin() {};                                                  // initialize led driver
     virtual void vSetColor(uint8_t, uint8_t, uint8_t) {};                      // set RGB color
     virtual void vOn()  {vSetColor(255,255,255);}                              // turn LED on (white) 

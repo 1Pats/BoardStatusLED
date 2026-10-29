@@ -29,7 +29,7 @@ Provides a unified API for built-in or external LEDs without requiring changes t
 
 Dual-core ESP32 (not supported on ESP32-CX)
 
-Arduino IDE (ESP32 core installed)
+Arduino IDE (ESP32 core 3.x installed — the RMT driver uses ESP-IDF 5 APIs)
 
 
 
@@ -223,9 +223,12 @@ BoardStatusLED/
 │   └── Example3/
 │       └── Example3.ino
 │
+├── keywords.txt
 ├── library.properties
+├── library.json
 ├── LICENSE
-└── README.md
+├── README.md
+└── RELEASE_NOTES.md
 ```
 
 

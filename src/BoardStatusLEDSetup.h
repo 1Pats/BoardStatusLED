@@ -4,7 +4,9 @@
 // Modify this file to enable the right backend LED
 // ESP32 S3 with onboard WS2812 LED is enabled by default, you do not need to change anything in this case
 
-// Uncomment the line to match your board. 
+#pragma once
+
+// Uncomment the line to match your board.
 #define USE_WS2812_LED                                                         // built in WS2812 LED (typically ESP32 S3 DEV boards) compact option
 // #define USE_WS2812_LED_ADAFRUIT                                             // built in WS2812 LED (typically ESP32 S3 DEV boards) Adafruit variant (requires AdaFruit_NeoPixel libray
 // #define USE_MONO_LED                                                        // built in LED (some of ESP32 DEV boards)
@@ -18,4 +20,8 @@
 
 // use this define and your PIN if USE_EXTERNAL_MONO_LED
 // #define EXT_MONO_LED_PIN    12                                              // tested on this pin. Put your PIN
+
+// Optional overrides of built-in LED pins (defaults shown)
+// #define WS2812_LED_PIN      48                                              // USE_WS2812_LED / USE_WS2812_LED_ADAFRUIT
+// #define MONO_LED_PIN        2                                               // USE_MONO_LED
 

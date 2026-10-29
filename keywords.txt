@@ -1,0 +1,64 @@
+#######################################
+# Syntax Coloring Map For BoardStatusLED
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+LEDStatus	KEYWORD1
+sLedStatusConfig	KEYWORD1
+eStatuses	KEYWORD1
+cLedDriver	KEYWORD1
+cLedService	KEYWORD1
+cLedServiceBase	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+LED	KEYWORD2
+LEDUSER	KEYWORD2
+vBegin	KEYWORD2
+vSetStatus	KEYWORD2
+vSetUser	KEYWORD2
+vUpdate	KEYWORD2
+vSetColor	KEYWORD2
+vOn	KEYWORD2
+vOff	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+OFF	LITERAL1
+OK	LITERAL1
+INFO	LITERAL1
+WORKING	LITERAL1
+ARMED	LITERAL1
+RETRIEVING	LITERAL1
+WAITING	LITERAL1
+CONNECTING	LITERAL1
+WARNING	LITERAL1
+ERROR	LITERAL1
+RAINBOW	LITERAL1
+RED	LITERAL1
+GREEN	LITERAL1
+BLUE	LITERAL1
+YELLOW	LITERAL1
+PINK	LITERAL1
+SKY	LITERAL1
+WHITE	LITERAL1
+USER	LITERAL1
+
+USE_WS2812_LED	LITERAL1
+USE_WS2812_LED_ADAFRUIT	LITERAL1
+USE_MONO_LED	LITERAL1
+USE_EXTERNAL_RGB_LED	LITERAL1
+USE_EXTERNAL_MONO_LED	LITERAL1
+EXT_MONO_LED_PIN	LITERAL1
+MONO_LED_PIN	LITERAL1
+WS2812_LED_PIN	LITERAL1
+RGB_RED_PIN	LITERAL1
+RGB_GREEN_PIN	LITERAL1
+RGB_BLUE_PIN	LITERAL1

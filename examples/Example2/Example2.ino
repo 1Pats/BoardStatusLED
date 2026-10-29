@@ -28,7 +28,7 @@ void loop() {
   void *pVoid = malloc(MEM_SIZE_BLOCK);                                        // allocate next block
   if (pVoid != NULL) {                                                         // if success 
     ulMemTotal += MEM_SIZE_BLOCK;                                              // count it
-    DP("Memory allocated:%d blocks (%d bytes) total\n", ulMemTotal/MEM_SIZE_BLOCK, MEM_SIZE_BLOCK); 
+    DP("Memory allocated:%d blocks (%d bytes) total\n", ulMemTotal/MEM_SIZE_BLOCK, ulMemTotal);
   }
   else {
     DP("Memory over\n");

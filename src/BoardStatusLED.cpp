@@ -250,7 +250,7 @@ void _vUpdateLED(void *voidPointer){                                           /
   cLedDriver* pLedPtr = &oBoardLed;                                            // pointer to driver 
   
 #elif defined(USE_EXTERNAL_RGB_LED)                                            // External RGB led
-  #if (defined(RGB_RED_PIN) + defined(RGB_GREEN_PIN) + defined(RGB_BLUE_PIN)) != 3
+  #if (defined(RGB_RED_PIN) + defined(RGB_GREEN_PIN) + defined(RGB_BLUE_PIN)) == 3
      cRGBLed oBoardLed(RGB_RED_PIN,RGB_GREEN_PIN,RGB_BLUE_PIN, false);         // external rgb led false - common 
      cLedDriver* pLedPtr = &oBoardLed;                                         // pointer tp led driver
   #else 
