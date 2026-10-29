@@ -27,7 +27,7 @@ Provides a unified API for built-in or external LEDs without requiring changes t
 
 # 📦 Requirements
 
-Dual-core ESP32 (not supported on ESP32-CX)
+Dual-core ESP32 
 
 Arduino IDE (ESP32 core 3.x installed — the RMT driver uses ESP-IDF 5 APIs)
 
