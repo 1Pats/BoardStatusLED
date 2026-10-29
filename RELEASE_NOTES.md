@@ -1,3 +1,18 @@
+# Release Notes — BoardStatusLED V2.0.1
+
+## Bug Fixes
+
+- **External RGB LED:** fixed inverted pin check that prevented `USE_EXTERNAL_RGB_LED` from compiling.
+- **Header include case:** `BoardStatusLEDSetup.h` is now included with the correct case (fixes builds on Linux/macOS).
+- `cLedDriver` destructor is now virtual.
+- Example2 now prints the actual total number of allocated bytes.
+
+## Improvements
+
+- Added `keywords.txt` (syntax highlighting), `library.json` (PlatformIO) and `.gitignore`.
+- `BoardStatusLEDSetup.h` documents optional `WS2812_LED_PIN` and `MONO_LED_PIN` overrides.
+- Documented the ESP32 Arduino core 3.x requirement.
+
 # Release Notes — BoardStatusLED V2.0
 
 ## New Status Modes
